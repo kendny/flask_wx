@@ -1,0 +1,10 @@
+"""
+http模块相关初始化, 对蓝图进行统一管理
+"""
+from application import app
+from web.controllers.index import route_index
+from web.controllers.user.User import route_user
+
+# 注册蓝图
+app.register_blueprint(route_index, url_prefix="/")
+app.register_blueprint(route_user, url_prefix='/user')
