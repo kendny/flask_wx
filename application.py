@@ -12,8 +12,9 @@ import os
 class Application(Flask):
     """配置按需加载进行分离"""
 
-    def __init__(self, import_name, template_folder=None):
-        super(Application, self).__init__(import_name)
+    def __init__(self, import_name, template_folder=None, root_path=None):
+        super(Application, self).__init__(import_name, template_folder=template_folder, root_path=root_path,
+                                          static_folder=None)
         # 加载配置
         self.config.from_pyfile('config/base_setting.py')
 
@@ -28,8 +29,8 @@ class Application(Flask):
 
 db = SQLAlchemy()
 # app = Flask(__name__)
-# os.getcwd() 获取当前路径
-app = Application(__name__, template_folder=os.getcwd() + "、web/templates/")
+# os.getcwd() 获取当前路径        web/templates
+app = Application(__name__, template_folder=os.getcwd() + "/web/templates/", root_path=os.getcwd())
 manager = Manager(app)
 
 """
@@ -37,5 +38,6 @@ manager = Manager(app)
     将模板方法注入进去
 """
 from common.libs.UrlManager import UrlManager
+
 app.add_template_global(UrlManager.buildStaticUrl, 'buildStaticUrl')
 app.add_template_global(UrlManager.buildUrl, 'buildUrl')
