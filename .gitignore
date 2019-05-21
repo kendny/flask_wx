@@ -1,2 +1,4 @@
-.idea/
-_pycachgit se_/
+.idea/*
+_pycache_/*
+config/*
+mina/.idea/
